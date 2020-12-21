@@ -46,4 +46,20 @@ export class UserService {
       )
     );
   }
+
+  searchByLocationSort(location: string, pageSize: number, page: number, sortBy: string, orderBy: string): Observable<User[]> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/search/users?q=location:` +
+      location + `&page=` + page + `&per_page=` + pageSize + `&sort=` + sortBy + `&order=` + orderBy).pipe(
+      map(
+        res => {
+          if (res.items != null && res.total_count > 0){
+            return res.items;
+          }
+          else{
+            return null;
+          }
+        }
+      )
+    );
+  }
 }

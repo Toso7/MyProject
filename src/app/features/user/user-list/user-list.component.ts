@@ -19,6 +19,13 @@ export class UserListComponent implements OnInit {
 
   public search = '';
 
+  public pageSize = 100;
+  public page = 1;
+
+  public orderFollowers = - 1;
+  public orderRepos = - 1;
+  public orderJoined = - 1;
+
   constructor(private userService: UserService,
               private cd: ChangeDetectorRef,
               private router: Router) {
@@ -28,9 +35,8 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     if (this.login !== undefined) {
       this.users$ = this.userService.getFollowers(this.login);
-    }
-    else{
-      this.users$ = this.userService.searchByLocation(this.search, 100, 1);
+    } else {
+      this.users$ = this.userService.searchByLocation(this.search, this.pageSize, this.page);
     }
   }
 
@@ -41,12 +47,59 @@ export class UserListComponent implements OnInit {
   }
 
   searchUsersResults(): void {
+
+    this.orderFollowers = -1;
+    this.orderRepos = -1;
+    this.orderJoined = -1;
+
     if (!this.search) {
       this.users$ = undefined;
     } else {
       if (this.search.length > 3) {
-        this.users$ = this.userService.searchByLocation(this.search, 100, 1);
+        this.users$ = this.userService.searchByLocation(this.search, this.pageSize, this.page);
       }
+    }
+  }
+
+  sortFollowers(): void {
+
+    this.orderFollowers++;
+    this.orderRepos = -1;
+    this.orderJoined = -1;
+
+    const orderBy = (this.orderFollowers === 0) ? 'asc' : (this.orderFollowers === 1) ? 'desc' : null;
+
+    if (orderBy != null) {
+      this.users$ = this.userService.searchByLocationSort(this.search, this.pageSize, this.page, 'followers', orderBy);
+    } else {
+      this.orderFollowers = -1;
+    }
+  }
+
+  sortRepos(): void {
+    this.orderFollowers = -1;
+    this.orderRepos++;
+    this.orderJoined = -1;
+
+    const orderBy = (this.orderRepos === 0) ? 'asc' : (this.orderRepos === 1) ? 'desc' : null;
+
+    if (orderBy != null) {
+      this.users$ = this.userService.searchByLocationSort(this.search, this.pageSize, this.page, 'repositories', orderBy);
+    } else {
+      this.orderRepos = -1;
+    }
+  }
+
+  sortJoined(): void {
+    this.orderFollowers = -1;
+    this.orderRepos = -1;
+    this.orderJoined++;
+    const orderBy = (this.orderJoined === 0) ? 'asc' : (this.orderJoined === 1) ? 'desc' : null;
+
+    if (orderBy != null) {
+      this.users$ = this.userService.searchByLocationSort(this.search, this.pageSize, this.page, 'joined', orderBy);
+    } else {
+      this.orderJoined = -1;
     }
   }
 }
