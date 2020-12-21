@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+
+      <div class="form-group" *ngIf="this.login === undefined">
+        <label class="form-label" for="searchUsers">Location</label>
+        <input type="search" class="form-control"
+               [(ngModel)]="search" (ngModelChange)="this.searchUsersResults()"
+               id="searchUsers">
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let user of users$ | async" (click)="onSelect(user)">
+          <img matListAvatar class="image" [src]="user.avatar_url" [alt]="user.login">
+          <h3 matLine> {{user.login}} </h3>
+          <div matLine>
+            <span> #Followers:  </span>
+            <span class="demo-2"> #Repos:  </span>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>
+

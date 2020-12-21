@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div *ngIf="user$ | async as user">
+        <img matListAvatar class="image" [src]="user.avatar_url" [alt]="user.login">
+        <h3 matLine> {{user.name}} </h3>
+        <h3 matLine> {{user.login}} </h3>
+        <div>
+          <span>Followers:  </span>
+          <app-user-list [login]="user.login"></app-user-list>
+        </div>
+        <div>
+          <span>Repositories: </span>
+          <app-repository-list [login]="user.login"></app-repository-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

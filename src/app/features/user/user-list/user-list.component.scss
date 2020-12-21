@@ -1,0 +1,17 @@
+.image{
+  width: 20%;
+}
+
+
+.user-scroll-viewport {
+  min-height: 100%;
+}
+
+
+
+cdk-virtual-scroll-viewport {
+
+  li {
+    list-style: none;
+  }
+}
