@@ -23,12 +23,14 @@ export class UserService {
     return this.httpClient.get<User>(`${environment.apiUrl}/users/` + login);
   }
 
-  getFollowers(login: string): Observable<User[]> {
-    return this.httpClient.get<User[]>(`${environment.apiUrl}/users/` + login + `/followers`);
+  getFollowers(login: string, perPage: number, page: number): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${environment.apiUrl}/users/` + login +
+      `/followers?per_page=` + perPage + `&page=` + page);
   }
 
-  getRepositories(login: string): Observable<Repository[]> {
-    return this.httpClient.get<Repository[]>(`${environment.apiUrl}/users/` + login + `/repos`);
+  getRepositories(login: string, perPage: number, page: number): Observable<Repository[]> {
+    return this.httpClient.get<Repository[]>(`${environment.apiUrl}/users/` + login +
+      `/repos?per_page=` + perPage + `&page=` + page);
   }
 
   searchByLocation(location: string, pageSize: number, page: number): Observable<User[]> {
@@ -36,10 +38,23 @@ export class UserService {
       location + `&page=` + page + `&per_page=` + pageSize).pipe(
       map(
         res => {
-          if (res.items != null && res.total_count > 0){
+          if (res.items != null && res.total_count > 0) {
             return res.items;
+          } else {
+            return null;
           }
-          else{
+        }
+      )
+    );
+  }
+
+  searchGetLength(location: string): Observable<number> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/search/users?q=location:` + location).pipe(
+      map(
+        res => {
+          if (res.items != null && res.total_count > 0) {
+            return res.total_count;
+          } else {
             return null;
           }
         }
@@ -52,14 +67,35 @@ export class UserService {
       location + `&page=` + page + `&per_page=` + pageSize + `&sort=` + sortBy + `&order=` + orderBy).pipe(
       map(
         res => {
-          if (res.items != null && res.total_count > 0){
+          if (res.items != null && res.total_count > 0) {
             return res.items;
-          }
-          else{
+          } else {
             return null;
           }
         }
       )
     );
+  }
+
+  getRepositoriesCount(login: string): Observable<number | null> {
+    return this.getUserDetail(login).pipe(
+      map(res => {
+        if (res != null) {
+          return res.public_repos;
+        } else {
+          return null;
+        }
+      }));
+  }
+
+  getFollowersCount(login: string): Observable<number | null> {
+    return this.getUserDetail(login).pipe(
+      map(res => {
+        if (res != null) {
+          return res.followers;
+        } else {
+          return null;
+        }
+      }));
   }
 }

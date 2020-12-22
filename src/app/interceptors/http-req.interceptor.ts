@@ -23,7 +23,8 @@ export class HttpReqInterceptor implements HttpInterceptor {
 
     request = request.clone({
       setHeaders: {
-        Authorization: `Basic dG9tYXMuYmFyYW5pYWtAZ21haWwuY29tOiAyMzA1NTk3MzMxMjY2ZmJjNjdmMjhhNWMxOWUyODEwZTRkMjA3NThhIA==`
+        Authorization: `Basic dG9tYXMuYmFyYW5pYWtAZ21haWwuY29tOiAyMzA1NTk3MzMxMjY2ZmJjNjdmMjhhNWMxOWUyODEwZTRkMjA3NThhIA==`,
+        Accept: `application/vnd.github.v3+json`
       }
     });
 

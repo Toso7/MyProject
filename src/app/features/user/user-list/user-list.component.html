@@ -9,21 +9,24 @@
                id="searchUsers">
       </div>
 
-      <div>
+      <div *ngIf="this.login === undefined">
         <button class="btn btn-light mr-2" (click)="sortFollowers()">Followers
-          <i *ngIf="orderFollowers === 0" class="fa fa-arrow-down"></i>
-          <i *ngIf="orderFollowers === 1" class="fa fa-arrow-up"></i>
+          <i *ngIf="orderFollowers === 1" class="fa fa-arrow-down"></i>
+          <i *ngIf="orderFollowers === 2" class="fa fa-arrow-up"></i>
         </button>
         <button class="btn btn-light mr-2" (click)="sortRepos()">Repos
-          <i *ngIf="orderRepos === 0" class="fa fa-arrow-down"></i>
-          <i *ngIf="orderRepos === 1" class="fa fa-arrow-up"></i>
+          <i *ngIf="orderRepos === 1" class="fa fa-arrow-down"></i>
+          <i *ngIf="orderRepos === 2" class="fa fa-arrow-up"></i>
         </button>
         <button class="btn btn-light" (click)="sortJoined()">Date create
-          <i *ngIf="orderJoined === 0" class="fa fa-arrow-down"></i>
-          <i *ngIf="orderJoined === 1" class="fa fa-arrow-up"></i>
+          <i *ngIf="orderJoined === 1" class="fa fa-arrow-down"></i>
+          <i *ngIf="orderJoined === 2" class="fa fa-arrow-up"></i>
         </button>
       </div>
 
+
+
+      <span *ngIf="this.login !== undefined">Followers: {{ length }} </span>
       <mat-list>
         <mat-list-item *ngFor="let user of users$ | async" (click)="onSelect(user)">
           <img matListAvatar class="image" [src]="user.avatar_url" [alt]="user.login">
@@ -34,6 +37,12 @@
           </div>
         </mat-list-item>
       </mat-list>
+
+      <mat-paginator [length]="length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="onPageChange($event)">
+      </mat-paginator>
     </div>
   </div>
 </div>

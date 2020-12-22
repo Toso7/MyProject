@@ -1,5 +1,14 @@
-<mat-list>
-  <mat-list-item *ngFor="let repo of repositories$ | async">
-    <a [href]="repo.html_url">{{repo.full_name}}</a>
-  </mat-list-item>
-</mat-list>
+<div class="col-xl-6">
+  <span>Repositories: {{ length }}</span>
+  <mat-list>
+    <mat-list-item *ngFor="let repo of repositories$ | async">
+      <a [href]="repo.html_url">{{repo.full_name}}</a>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-paginator [length]="length"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

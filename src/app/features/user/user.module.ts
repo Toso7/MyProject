@@ -7,6 +7,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { RepositoryListComponent } from './repository-list/repository-list.component';
 import {FormsModule} from '@angular/forms';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     ]),
     MatListModule,
     FormsModule,
-    ScrollingModule
+    ScrollingModule,
+    MatPaginatorModule
   ]
 })
 export class UserModule {
