@@ -6,6 +6,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpReqInterceptor} from './interceptors/http-req.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import {HttpErrorInterceptor} from './interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,11 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpReqInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true
     }
   ],
