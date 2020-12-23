@@ -7,11 +7,16 @@ import {HttpReqInterceptor} from './interceptors/http-req.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import {HttpErrorInterceptor} from './interceptors/http-error.interceptor';
+import {AuthService} from './services/auth.service';
+import { AuthComponent } from './shared/auth/auth.component';
+import { HomeComponent } from './shared/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    AuthComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +34,8 @@ import {HttpErrorInterceptor} from './interceptors/http-error.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
       multi: true
-    }
+    },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

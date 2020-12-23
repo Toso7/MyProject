@@ -145,12 +145,12 @@ export class UserListComponent implements OnInit, OnDestroy {
           this.users$ = this.userService.searchByLocationSort(this.search, this.pageSize, this.page, 'followers', orderBy);
         }
       } else if (this.orderRepos !== 0) {
-        orderBy = this.mapOrderBy[this.orderFollowers];
+        orderBy = this.mapOrderBy[this.orderRepos];
         if (orderBy != null) {
-          this.users$ = this.userService.searchByLocationSort(this.search, this.pageSize, this.page, 'joined', orderBy);
+          this.users$ = this.userService.searchByLocationSort(this.search, this.pageSize, this.page, 'repositories', orderBy);
         }
       } else if (this.orderJoined !== 0) {
-        orderBy = this.mapOrderBy[this.orderFollowers];
+        orderBy = this.mapOrderBy[this.orderJoined];
         if (orderBy != null) {
           this.users$ = this.userService.searchByLocationSort(this.search, this.pageSize, this.page, 'joined', orderBy);
         }
