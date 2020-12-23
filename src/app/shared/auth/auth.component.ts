@@ -32,7 +32,7 @@ export class AuthComponent implements OnInit {
   }
 
   public getToken(code: string): Observable<any> {
-    this.accessToken = this.http.get(environment.gatekeeperConfig.gatekeeper + '/authenticate/' + code)
+    this.accessToken = this.http.get(environment.gatekeeperConfig.gatekeeper + '/?code=' + code)
       .pipe(
         map(res => {
           if (res && 'token' in res) {
