@@ -5,6 +5,11 @@
 export const environment = {
   production: false,
   apiUrl: 'https://api.github.com',
+  gatekeeperConfig: {
+    client_id: 'b442133bd4e9b87b9f62', // your Client ID from GitHub
+    redirect_uri: 'http://localhost:4200/auth', // authentication url
+    gatekeeper: 'http://localhost:9999' // url from gatekeeper
+  }
 };
 
 /*

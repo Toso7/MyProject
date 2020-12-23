@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-xl-12">
       <div *ngIf="user$ | async as user">
+        <div *ngIf="myProfile">
+          <span>My profile</span>
+        </div>
         <img matListAvatar class="image" [src]="user.avatar_url" [alt]="user.login">
         <h3 matLine> {{user.name}} </h3>
         <span matLine> {{user.login}} </span>
@@ -9,7 +12,6 @@
           <div class="col-sm-6">
             <app-user-list [login]="user.login"></app-user-list>
           </div>
-
           <div class="col-sm-6">
             <app-repository-list [login]="user.login"></app-repository-list>
           </div>

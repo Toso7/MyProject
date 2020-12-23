@@ -6,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import {from, Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class HttpReqInterceptor implements HttpInterceptor {
@@ -21,12 +22,14 @@ export class HttpReqInterceptor implements HttpInterceptor {
   async handle(request: HttpRequest<any>, next: HttpHandler) {
 
 
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Basic dG9tYXMuYmFyYW5pYWtAZ21haWwuY29tOiAyMzA1NTk3MzMxMjY2ZmJjNjdmMjhhNWMxOWUyODEwZTRkMjA3NThhIA==`,
-        Accept: `application/vnd.github.v3+json`
-      }
-    });
+    if (!request.url.includes(environment.gatekeeperConfig.gatekeeper)
+      && localStorage.getItem('access_token') !== null) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: 'token ' + localStorage.getItem('access_token')
+        }
+      });
+    }
 
     // Important: Note the .toPromise()
     return next.handle(request).toPromise();
